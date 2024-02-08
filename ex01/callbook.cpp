@@ -15,21 +15,20 @@ int		index_selector(PhoneBook Pb)
 	}
 	return (0);
 }
-void	book_add(PhoneBook Pb)
+void	book_add(PhoneBook &Pb)
 {
 	int i =	index_selector(Pb);
 
-	std::cout << "first name: ";
+	std::cout << "first name:" << std::endl;
 	std::cin >> Pb.contacts[i].first_name;
-	std::cout << "last name: ";
+	std::cout << "last name:" << std::endl;
 	std::cin >> Pb.contacts[i].last_name;
-	std::cout << "nickname: ";
+	std::cout << "nickname:" << std::endl;
 	std::cin >> Pb.contacts[i].nick_name;
-	std::cout << "phone number: ";
+	std::cout << "phone number:" << std::endl;
 	std::cin >> Pb.contacts[i].phone_number;
-	std::cout << "darkest secret: ";
+	std::cout << "darkest secret:" << std::endl;
 	std::cin >> Pb.contacts[i].darkest_secret;
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 int main()
