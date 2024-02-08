@@ -9,7 +9,7 @@ GREEN			= \033[0;32m
 YELLOW			= \033[0;33m
 NO_COLOR		= \033[0m
 
-SRC	= Contact.hpp PhoneBook.hpp callbook.cpp
+SRC	= Contact.hpp callbook.h PhoneBook.hpp callbook.cpp
 
 OBJ = $(SRC:.c=.o)
 
