@@ -1,4 +1,5 @@
 #include "callbook.h"
+#include <limits>
 
 void	book_search(void)
 {
@@ -16,26 +17,36 @@ int		index_selector(PhoneBook Pb)
 }
 void	book_add(PhoneBook Pb)
 {
-	int i = index_selector(Pb);
+	int i =	index_selector(Pb);
+
 	std::cout << "first name: ";
 	std::cin >> Pb.contacts[i].first_name;
-	std::cout << std::endl;
+	std::cout << "last name: ";
+	std::cin >> Pb.contacts[i].last_name;
+	std::cout << "nickname: ";
+	std::cin >> Pb.contacts[i].nick_name;
+	std::cout << "phone number: ";
+	std::cin >> Pb.contacts[i].phone_number;
+	std::cout << "darkest secret: ";
+	std::cin >> Pb.contacts[i].darkest_secret;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 int main()
 {
-	PhoneBook Pb;
+	PhoneBook	Pb;
+	std::string buffer;
 	while (1)
 	{
-		std::string buffer;
 		std::cout << "Alec's PhoneBook: ";
-		std::cin >> buffer;
+		std::getline(std::cin, buffer);
+		if (buffer.empty())
+			return (1);
 		if (buffer == "EXIT")
 			return (1);
 		if (buffer == "SEARCH")
 			book_search();
 		if (buffer == "ADD")
 			book_add(Pb);
-		std::cout << std::endl;
 	}
 }
