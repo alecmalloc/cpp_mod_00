@@ -1,22 +1,38 @@
 #include "callbook.hpp"
 #include <iomanip>
 
-#include <iomanip> // Include the <iomanip> library for std::setw
-
 void	display_header(void)
 {
 	std::cout << std::setw(10) << std::right << "index";
 	std::cout << "|";
-	std::cout << std::setw(10) << std::right << "first name"; // Increase the width to accommodate longer names
+	std::cout << std::setw(10) << std::right << "first name";
 	std::cout << "|";
-	std::cout << std::setw(10) << std::right << "last name"; // Increase the width to accommodate longer names
+	std::cout << std::setw(10) << std::right << "last name";
 	std::cout << "|";
-	std::cout << std::setw(10) << std::right << "nickname"; // Increase the width to accommodate longer nicknames
+	std::cout << std::setw(10) << std::right << "nickname";
 	std::cout << std::endl;
 }
 
+void 	display_contact(PhoneBook &Pb, std::string buffer)
+{
+	int index = std::stoi(buffer);
+	if (index < 0 || index > 7)
+	{
+		std::cout << "index out of bounds..." << std::endl;
+		return ;
+	}
+	std::cout << Pb.contacts[index].first_name << std::endl;
+	std::cout << Pb.contacts[index].last_name << std::endl;
+	std::cout << Pb.contacts[index].nick_name << std::endl;
+	std::cout << Pb.contacts[index].phone_number << std::endl;
+	std::cout << Pb.contacts[index].darkest_secret << std::endl;
+}
+
+
 void	display_entries(PhoneBook &Pb)
 {
+	std::string buffer;
+
 	for (int i = 0; !Pb.contacts[i].first_name.empty(); i++)
 	{
 		std::cout << std::setw(10) << std::right << i;
@@ -28,12 +44,18 @@ void	display_entries(PhoneBook &Pb)
 		std::cout << std::setw(10) << std::right << Pb.contacts[i].nick_name;
 		std::cout << std::endl;
 	}
+	std::cout << "show index: ";
+	std::getline(std::cin, buffer);
+	if (!buffer.empty())
+		display_contact(Pb, buffer);
+	std::cout << std::endl;
 }
 
 void	book_search(PhoneBook &Pb)
 {
 	display_header();
-	display_entries(Pb);
+	if (!Pb.contacts[0].first_name.empty())
+		display_entries(Pb);
 	return ;
 }
 
@@ -53,22 +75,37 @@ int		index_selector(PhoneBook &Pb)
 	bop_and_shift_up(Pb);
 	return (7);
 }
+
+void	str_shorten(std::string &str)
+{
+	if (str.length() < 10)
+		return ;
+	std::string trim;
+	trim = str.substr(0, 10);
+	trim.replace(9, 1, ".");
+	str = trim;
+}
+
 void	book_add(PhoneBook &Pb)
 {
 	int i =	index_selector(Pb);
 	std::cout << "working on: " << i << std::endl;
 	std::string buffer;
 
-	std::cout << "first name:" << std::endl;
+	std::cout << "first name: ";
 	std::getline(std::cin, Pb.contacts[i].first_name);
-	std::cout << "last name:" << std::endl;
+	str_shorten(Pb.contacts[i].first_name);
+	std::cout << "last name: ";
 	std::getline(std::cin, Pb.contacts[i].last_name);
-	std::cout << "nickname:" << std::endl;
+	str_shorten(Pb.contacts[i].last_name);
+	std::cout << "nickname: ";
 	std::getline(std::cin, Pb.contacts[i].nick_name);
-	std::cout << "phone number:" << std::endl;
+	str_shorten(Pb.contacts[i].nick_name);
+	std::cout << "phone number: ";
 	std::getline(std::cin, Pb.contacts[i].phone_number);
-	std::cout << "darkest secret:" << std::endl;
+	std::cout << "darkest secret: ";
 	std::getline(std::cin, Pb.contacts[i].darkest_secret);
+	std::cout << std::endl;
 }
 
 int main()
