@@ -1,5 +1,4 @@
 #include "callbook.hpp"
-#include <iomanip>
 
 void	display_header(void)
 {
@@ -13,24 +12,25 @@ void	display_header(void)
 	std::cout << std::endl;
 }
 
-void 	display_contact(PhoneBook &Pb, std::string buffer)
+void 	display_contact(PhoneBook &Pb, unsigned short index)
 {
-	int index = std::stoi(buffer);
-	if (index < 0 || index > 7)
+	// no need to check lower bounds because using unsigned short
+	if (index > 7)
 	{
 		std::cout << "index out of bounds..." << std::endl;
 		return ;
 	}
-	std::cout << Pb.contacts[index].first_name << std::endl;
-	std::cout << Pb.contacts[index].last_name << std::endl;
-	std::cout << Pb.contacts[index].nick_name << std::endl;
-	std::cout << Pb.contacts[index].phone_number << std::endl;
-	std::cout << Pb.contacts[index].darkest_secret << std::endl;
+	std::cout << "first name: " << Pb.contacts[index].first_name << std::endl;
+	std::cout << "last name: " << Pb.contacts[index].last_name << std::endl;
+	std::cout << "nickname: " << Pb.contacts[index].nick_name << std::endl;
+	std::cout << "phone number: " << Pb.contacts[index].phone_number << std::endl;
+	std::cout << "darkest secret " << Pb.contacts[index].darkest_secret << std::endl;
 }
 
 
 void	display_entries(PhoneBook &Pb)
 {
+	unsigned short index;
 	std::string buffer;
 
 	for (int i = 0; !Pb.contacts[i].first_name.empty(); i++)
@@ -46,8 +46,9 @@ void	display_entries(PhoneBook &Pb)
 	}
 	std::cout << "show index: ";
 	std::getline(std::cin, buffer);
-	if (!buffer.empty())
-		display_contact(Pb, buffer);
+	std::stringstream ss(buffer);
+	ss >> index;
+	display_contact(Pb, index);
 	std::cout << std::endl;
 }
 
@@ -89,7 +90,7 @@ void	str_shorten(std::string &str)
 void	book_add(PhoneBook &Pb)
 {
 	int i =	index_selector(Pb);
-	std::cout << "working on: " << i << std::endl;
+	// std::cout << "working on: " << i << std::endl;
 	std::string buffer;
 
 	std::cout << "first name: ";
