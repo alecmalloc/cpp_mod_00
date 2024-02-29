@@ -1,4 +1,4 @@
-#include "callbook.h"
+#include "callbook.hpp"
 #include <limits>
 
 void	book_search(void)
@@ -18,17 +18,18 @@ int		index_selector(PhoneBook Pb)
 void	book_add(PhoneBook &Pb)
 {
 	int i =	index_selector(Pb);
+	std::string buffer;
 
 	std::cout << "first name:" << std::endl;
-	std::cin >> Pb.contacts[i].first_name;
+	std::getline(std::cin, Pb.contacts[i].first_name);
 	std::cout << "last name:" << std::endl;
-	std::cin >> Pb.contacts[i].last_name;
+	std::getline(std::cin, Pb.contacts[i].last_name);
 	std::cout << "nickname:" << std::endl;
-	std::cin >> Pb.contacts[i].nick_name;
+	std::getline(std::cin, Pb.contacts[i].nick_name);
 	std::cout << "phone number:" << std::endl;
-	std::cin >> Pb.contacts[i].phone_number;
+	std::getline(std::cin, Pb.contacts[i].phone_number);
 	std::cout << "darkest secret:" << std::endl;
-	std::cin >> Pb.contacts[i].darkest_secret;
+	std::getline(std::cin, Pb.contacts[i].darkest_secret);
 }
 
 int main()
@@ -39,8 +40,6 @@ int main()
 	{
 		std::cout << "Alec's PhoneBook: ";
 		std::getline(std::cin, buffer);
-		if (buffer.empty())
-			return (1);
 		if (buffer == "EXIT")
 			return (1);
 		if (buffer == "SEARCH")

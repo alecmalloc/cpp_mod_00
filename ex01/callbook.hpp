@@ -1,5 +1,5 @@
-#ifndef CALLBOOK_H
-# define CALLBOOK_H
+#ifndef CALLBOOK_HPP
+# define CALLBOOK_HPP
 
 #include <iostream>
 
