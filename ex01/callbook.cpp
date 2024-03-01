@@ -27,13 +27,33 @@ void 	display_contact(PhoneBook &Pb, unsigned short index)
 	std::cout << "darkest secret " << Pb.contacts[index].darkest_secret << std::endl;
 }
 
+unsigned short	get_contacts_length(PhoneBook &Pb)
+{
+	for (int i = 0; i < 8; i++)
+	{
+		if (Pb.contacts[i].first_name.empty())
+			return (i);
+	}
+	return (8);
+}
+
+short	get_check_integer(std::string buffer, unsigned short &index)
+{
+	std::stringstream ss(buffer);
+	ss >> index;
+	std::string	leftovers;
+	if (ss >> leftovers)
+		return (-1);
+	return (0);
+}
 
 void	display_entries(PhoneBook &Pb)
 {
 	unsigned short index;
 	std::string buffer;
 
-	for (int i = 0; !Pb.contacts[i].first_name.empty(); i++)
+	unsigned short length = get_contacts_length(Pb);
+	for (int i = 0; i < length; i++)
 	{
 		std::cout << std::setw(10) << std::right << i;
 		std::cout << "|";
@@ -46,10 +66,12 @@ void	display_entries(PhoneBook &Pb)
 	}
 	std::cout << "show index: ";
 	std::getline(std::cin, buffer);
-	std::stringstream ss(buffer);
-	ss >> index;
+	if (get_check_integer(buffer, index) == -1)
+	{
+		std::cout << "thats not even a number dude" << std::endl;
+		return;
+	}
 	display_contact(Pb, index);
-	std::cout << std::endl;
 }
 
 void	book_search(PhoneBook &Pb)
@@ -90,7 +112,6 @@ void	str_shorten(std::string &str)
 void	book_add(PhoneBook &Pb)
 {
 	int i =	index_selector(Pb);
-	// std::cout << "working on: " << i << std::endl;
 	std::string buffer;
 
 	std::cout << "first name: ";
