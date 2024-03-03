@@ -37,16 +37,6 @@ unsigned short	get_contacts_length(PhoneBook &Pb)
 	return (8);
 }
 
-short	get_check_integer(std::string buffer, unsigned short &index)
-{
-	std::stringstream ss(buffer);
-	ss >> index;
-	std::string	leftovers;
-	if (ss >> leftovers)
-		return (-1);
-	return (0);
-}
-
 void	display_entries(PhoneBook &Pb)
 {
 	unsigned short index;
@@ -66,11 +56,8 @@ void	display_entries(PhoneBook &Pb)
 	}
 	std::cout << "show index: ";
 	std::getline(std::cin, buffer);
-	if (get_check_integer(buffer, index) == -1)
-	{
-		std::cout << "thats not even a number dude" << std::endl;
-		return;
-	}
+	std::stringstream ss(buffer);
+	ss >> index;
 	display_contact(Pb, index);
 }
 
