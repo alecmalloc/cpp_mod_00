@@ -1,40 +1,25 @@
-.SILENT:
-NAME	=	accounts
-CFLAGS	=	-Wall -Wextra -Werror
-CC		=	c++
+name    = accounts
+CC      = c++
+FLAGS   = -Wall -Wextra -Werror
+OUT     = $(name)
 
-# ANSI escape codes for colored output
-RED				= \033[0;31m
-GREEN			= \033[0;32m
-YELLOW			= \033[0;33m
-NO_COLOR		= \033[0m
+# 1. Find all .cpp files in the current directory
+SOURCES = $(wildcard *.cpp)
+# 2. Convert the .cpp files to .o files
+OBJS    = $(patsubst %.cpp,%.o,$(SOURCES))
 
-SRC	= Account.cpp
+# Compile all object files and link into the final executable
+all: $(OUT)
 
-OBJ = $(SRC:.c=.o)
+$(OUT): $(OBJS)
+	$(CC) -g $(OBJS) -o $(OUT)
 
-all: $(NAME)
-	@echo "$(GREEN)$(NAME) ready.$(NO_COLOR)"
-
-$(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -std=c++98
-	@echo "$(YELLOW)Compiling $(NAME)...$(NO_COLOR)"
+# 3. Pattern rule for object files
+%.o: %.cpp
+	$(CC) $(FLAGS) -c $< -std=c++98
 
 clean:
-	@echo "$(RED)Cleaning up...$(NO_COLOR)"
-	@rm -rf $(OBJ)
-	@echo "$(RED)Done cleaning up.$(NO_COLOR)"
+	rm -f $(OBJS) $(OUT)
 
-fclean: clean
-	@echo "$(RED)Cleaning up...$(NO_COLOR)"
-	@rm -rf $(NAME)
-	@echo "$(RED)Done cleaning up.$(NO_COLOR)"
-
-re: fclean all
-	@./$(NAME)
-
-run: $(NAME)
-	./$(NAME)
-
-r: $(NAME)
-	./$(NAME)
+fclean:
+	rm -f $(name) *.o

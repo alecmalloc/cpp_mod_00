@@ -101,17 +101,3 @@ bool Account::makeWithdrawal(int withdrawal) {
 	<< ";nb_withdrawals:" << _nbWithdrawals << std::endl;
 	return true;
 }
-
-int main(void)
-{
-	Account aAccount(200);
-	Account bAccount(100);
-	aAccount.displayAccountsInfos();
-	aAccount.displayStatus();
-	bAccount.displayStatus();
-	aAccount.makeDeposit(2);
-	aAccount.displayAccountsInfos();
-	bAccount.makeWithdrawal(2);
-	bAccount.~Account();
-	return 0;
-}
